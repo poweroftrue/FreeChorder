@@ -25,48 +25,95 @@ Think of it as text expansion on steroids - instead of typing full words or phra
 ## Example Usage
 
 ```bash
-# Add a chord: pressing a+s+d simultaneously outputs "and"
-freechorder add "asd" "and"
+# ===== ADDING CHORDS =====
 
-# Add another chord for "the"
-freechorder add "teh" "the"
+# Interactive mode - Best for beginners (prompts for everything)
+fc add
 
-# Search for chords
-freechorder search "and"
+# Quick add with preview and confirmation
+fc add "asd" "and"
+
+# Super quick - no confirmation (for power users)
+fc add "the" "the" --no-confirm
+
+# Add with category
+fc add "fun" "function" --category "programming"
+
+# Batch add from file
+fc add --batch my_chords.txt
+
+# Get suggestions for common chords
+fc suggest
+
+
+# ===== MANAGING CHORDS =====
 
 # List all chords
-freechorder list
+fc list
+
+# Search for chords
+fc search "and"
+
+# Remove a chord
+fc remove "asd"
+
+# Undo last chord addition (lifesaver!)
+fc undo
+
+# Undo last 3 additions
+fc undo 3
+
+# View statistics
+fc stats
+
+# Detailed statistics breakdown
+fc stats --detailed
 
 
-# Enter impulse mode to create chords while typing
-freechorder impulse
-# or use the shortcut: fc impulse
+# ===== IMPULSE MODE (Create Chords While Typing) =====
 
-# Quick launch impulse mode: 
-# - Press Ctrl+Option+Delete for regular mode
-# - Press Cmd+Option+Delete for fast mode (⚡ ~0.5s startup)
-# - Press Shift+Option+Delete for instant dialog (⚡⚡ no delay!
+# Enter impulse mode - creates chords on-the-fly
+fc impulse
+
+# Quick launch impulse mode with keyboard shortcuts:
+# - Ctrl+Option+Delete: Regular mode (~2 sec startup)
+# - Cmd+Option+Delete: Quick mode (~0.5 sec startup) ⚡
+# - Shift+Option+Delete: Native dialog (instant!) ⚡⚡
+
+# Sync quick chords after using fast modes
+fc sync
+
+
+# ===== CONFIGURATION =====
 
 # Activate the FreeChorder profile in Karabiner
-freechorder activate
+fc activate
 
-# Configure chord sensitivity (default: 100ms)
-# This automatically updates ALL existing chords to use the new timing!
-freechorder config --chord-timeout 150  # More forgiving for slower typing
-freechorder config --chord-timeout 75   # Tighter timing for faster typists
-freechorder config --show               # Show current configuration
+# Configure chord sensitivity (automatically updates all chords!)
+fc config --chord-timeout 150  # More forgiving for slower typing
+fc config --chord-timeout 75   # Tighter timing for faster typists
+fc config --show               # Show current configuration
 
-# Refresh all chords with current settings (including dynamic sensitivity)
-freechorder refresh
+# Refresh all chords with current settings
+fc refresh
 
-# Export chords to modular JSON files for better organization
-freechorder export --format modular  # Creates separate files by chord length/category
-freechorder export --format integrated  # Updates single Karabiner config (default)
+# Export chords to modular JSON files
+fc export --format modular  # Separate files by length/category
+fc export --format integrated  # Single Karabiner config (default)
 
-# Manage chord groups (enable/disable groups of chords)
-freechorder groups --list  # Show all groups and their status
-freechorder groups --disable "2-Key Chords (Quick)"  # Disable all 2-key chords
-freechorder groups --enable "3-Key Chords (Standard)"  # Re-enable 3-key chords
+
+# ===== CHORD GROUPS =====
+
+# Manage chord groups (enable/disable sets of chords)
+fc groups --list  # Show all groups and their status
+fc groups --disable "2-Key Chords (Quick)"  # Disable all 2-key chords
+fc groups --enable "3-Key Chords (Standard)"  # Re-enable 3-key chords
+
+
+# ===== PERMISSIONS =====
+
+# Check accessibility permissions (needed for impulse mode)
+fc permissions
 ```
 
 ### Modular Configuration
@@ -131,38 +178,103 @@ source ~/.zshrc  # Or restart terminal
 
 This repository contains comprehensive documentation for building FreeChorder:
 
-### 📋 [PROJECT_PLAN.md](PROJECT_PLAN.md)
-Complete project plan covering:
-- Project overview and objectives
-- Technical architecture
-- Feature specifications
-- Implementation timeline
-- CharaChorder compatibility details
-- Testing and deployment strategies
+### 📚 User Guides
 
-### 🚀 [QUICK_START_IMPLEMENTATION.md](QUICK_START_IMPLEMENTATION.md)
-Actionable implementation guide for building the MVP:
-- Day-by-day development plan
-- Essential code snippets
-- MVP feature prioritization
-- Common issues and solutions
-- Testing checklist
+#### 🎯 [IMPROVEMENTS_GUIDE.md](IMPROVEMENTS_GUIDE.md)
+Complete guide to the enhanced features:
+- Interactive chord addition workflow
+- Undo functionality usage
+- Batch import from files
+- Chord suggestions system
+- Before/after comparisons
 
-### 🏗️ [TECHNICAL_ARCHITECTURE.md](TECHNICAL_ARCHITECTURE.md)
-Detailed technical design document including:
-- System architecture diagrams
-- Component specifications with code examples
-- Data structures and storage formats
-- Performance optimization strategies
-- Security considerations
-- Error handling patterns
+#### 📖 [QUICK_REFERENCE.md](QUICK_REFERENCE.md)
+Quick command reference card:
+- All commands with examples
+- Common workflows
+- Troubleshooting tips
+- Decision trees for choosing commands
+
+#### 📊 [STATS_FIX.md](STATS_FIX.md)
+Statistics and analytics guide:
+- Understanding chord distributions
+- Category breakdowns
+- Recent activity tracking
+- Detailed view usage
+
+### 🔧 Technical Documentation (For Developers)
+
+#### 🔬 [RESEARCH_AND_IMPROVEMENTS_SUMMARY.md](RESEARCH_AND_IMPROVEMENTS_SUMMARY.md)
+Comprehensive implementation summary:
+- UX research and pain points identified
+- Solutions implemented with code details
+- Before/after metrics and comparisons
+- Future enhancement roadmap
+
+#### 📝 [CHORD_ORDERING_FIX.md](CHORD_ORDERING_FIX.md)
+Critical bug fix documentation:
+- Problem: Shorter chords triggering before longer ones
+- Solution: Longest-first sorting algorithm
+- Profile pausing during impulse mode
+- Testing and verification results
+
+## Quick Start for Users
+
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/freechorder.git
+cd freechorder
+
+# Create virtual environment and install
+python3 -m venv venv
+source venv/bin/activate
+pip install -e .
+
+# Install Karabiner-Elements
+# Download from: https://karabiner-elements.pqrs.org/
+```
+
+### First Steps
+```bash
+# 1. Get suggestions for common chords
+fc suggest
+
+# 2. Add your first chord interactively
+fc add
+# Follow the prompts...
+
+# 3. Activate FreeChorder in Karabiner
+fc activate
+
+# 4. Test it! Press your chord keys in any app
+# They should output the text you defined
+
+# 5. View your chords
+fc list
+
+# 6. See statistics
+fc stats
+```
+
+### For Beginners
+1. Read [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - Quick command guide
+2. Read [IMPROVEMENTS_GUIDE.md](IMPROVEMENTS_GUIDE.md) - Feature walkthrough
+3. Start with `fc suggest` to get ideas
+4. Use `fc add` (interactive mode) to learn the system
+
+### For Power Users
+1. Create a batch file with your chords
+2. Import with `fc add --batch chords.txt`
+3. Use `--no-confirm` flag for speed
+4. Adjust timing with `fc config`
 
 ## Quick Start for Developers
 
 1. **Read the documentation in this order:**
-   - Start with `PROJECT_PLAN.md` for the big picture
-   - Follow `QUICK_START_IMPLEMENTATION.md` to begin coding
-   - Reference `TECHNICAL_ARCHITECTURE.md` for detailed implementations
+   - Start with `RESEARCH_AND_IMPROVEMENTS_SUMMARY.md` for implementation details
+   - Check `CHORD_ORDERING_FIX.md` and `STATS_FIX.md` for critical fixes
+   - Review the code in `src/freechorder/` for implementation
 
 2. **Prerequisites:**
    - macOS (10.15 or later)
@@ -171,19 +283,63 @@ Detailed technical design document including:
    - Basic familiarity with terminal applications
 
 3. **Key Technologies:**
-   - **Python**: Main application language
+   - **Python 3.9+**: Main application language
+   - **Click**: CLI framework for commands
    - **Karabiner-Elements**: Keyboard remapping backend
-   - **Click/Typer**: CLI framework
+   - **pynput**: Keyboard monitoring for impulse mode
    - **YAML/JSON**: Configuration storage
+   - **PyObjC**: macOS integration
+
+4. **Project Structure:**
+   ```
+   freechorder/
+   ├── src/freechorder/
+   │   ├── cli/
+   │   │   ├── main.py              # Main CLI entry point
+   │   │   ├── interactive_add.py   # Enhanced chord addition
+   │   │   └── quick_impulse.py     # Fast impulse mode
+   │   ├── core/
+   │   │   ├── chord_manager.py     # Chord CRUD operations
+   │   │   └── impulse_handler.py   # Real-time chord creation
+   │   ├── karabiner/
+   │   │   └── config_generator.py  # Karabiner integration
+   │   └── utils/
+   │       ├── config.py            # Configuration management
+   │       └── permissions.py       # Accessibility checks
+   └── examples/
+       └── starter_chords.txt       # Sample batch file
+   ```
 
 ## Core Features
 
-- **Chord Management**: Add, remove, edit, and search chords
-- **Impulse Chording**: Create chords on-the-fly while typing
-- **Conflict Detection**: Prevents chord conflicts automatically
-- **Import/Export**: Compatible with CharaChorder CSV format
-- **Statistics**: Track chord usage and typing improvements
-- **Backup/Restore**: Never lose your chord configurations
+### ✨ NEW: Enhanced User Experience
+- **Interactive Mode**: Guided chord addition with prompts and previews
+- **Undo Functionality**: Instantly undo mistakes (`fc undo`)
+- **Chord Suggestions**: Get ideas for common chords (`fc suggest`)
+- **Batch Addition**: Import multiple chords from files
+- **Better Validation**: Conflict detection before you type everything
+- **Visual Statistics**: Beautiful charts showing chord distributions
+
+### Chord Management
+- **Add**: Interactive, quick, or batch modes with confirmation
+- **Remove**: Delete chords by input keys or output text
+- **Search**: Find chords by input or output
+- **List**: View all chords with sorting options
+- **Undo**: Remove last N chord additions
+- **Stats**: Comprehensive analytics with visual breakdowns
+
+### Impulse Chording
+- **Create on-the-fly**: Press keys together, then define output
+- **Profile Pausing**: Auto-disables chords during impulse mode (no interference!)
+- **Multiple Triggers**: Keyboard shortcuts at different speeds
+- **Dynamic Sensitivity**: Automatic timing based on chord length
+
+### Smart Features
+- **Conflict Detection**: Prevents duplicate and overlapping chords
+- **Chord Ordering**: Longer chords processed first (prevents short-chord issues)
+- **Category Support**: Organize chords into groups
+- **Dynamic Sensitivity**: 2-key (50ms), 3-key (75ms), 4-key (100ms), 5+ key (125ms)
+- **Export/Import**: Modular JSON files for version control
 
 ## Why FreeChorder?
 
@@ -195,7 +351,36 @@ Detailed technical design document including:
 
 ## Development Status
 
-This is the planning phase of FreeChorder. The documentation provides everything needed to build a fully functional system. The actual implementation can be completed in approximately 2-4 weeks following the provided guides.
+✅ **Fully Functional!** FreeChorder is now complete and ready to use.
+
+### Recent Enhancements (Latest Updates)
+- ✅ **Interactive Chord Addition** - Guided workflow with previews
+- ✅ **Undo Functionality** - Fix mistakes instantly
+- ✅ **Chord Suggestions** - Get started faster
+- ✅ **Batch Import** - Add multiple chords at once
+- ✅ **Enhanced Statistics** - Visual breakdowns and analytics
+- ✅ **Profile Pausing** - Impulse mode now pauses existing chords
+- ✅ **Chord Ordering Fix** - Longer chords process before shorter ones
+- ✅ **Better UX** - Confirmation prompts, error messages, and tips
+
+### Available Commands
+```bash
+fc add          # Interactive chord addition
+fc undo         # Undo last addition
+fc suggest      # Get chord ideas
+fc stats        # View analytics
+fc impulse      # Create chords on-the-fly
+fc list         # View all chords
+fc search       # Find chords
+fc remove       # Delete chords
+fc config       # Configure settings
+fc groups       # Manage chord groups
+fc export       # Export configurations
+fc activate     # Enable FreeChorder profile
+fc refresh      # Update all chords
+fc sync         # Sync quick chords
+fc permissions  # Check permissions
+```
 
 ## Contributing
 
@@ -212,4 +397,30 @@ This project will be released under the MIT License, making it free for personal
 
 ---
 
-Ready to build the future of chord-based typing on macOS? Start with the [PROJECT_PLAN.md](PROJECT_PLAN.md) and let's make typing faster and more efficient for everyone! 🚀
+## Get Started
+
+Ready to supercharge your typing with chord-based input? 
+
+### For Users:
+```bash
+fc suggest    # Get ideas
+fc add        # Add your first chord
+fc activate   # Enable FreeChorder
+```
+
+### For Developers:
+Start with [RESEARCH_AND_IMPROVEMENTS_SUMMARY.md](RESEARCH_AND_IMPROVEMENTS_SUMMARY.md) for complete implementation details
+
+Let's make typing faster and more efficient for everyone! 🚀
+
+---
+
+**Latest Updates:**
+- ✅ Interactive chord addition with previews
+- ✅ Undo functionality (`fc undo`)
+- ✅ Chord suggestions (`fc suggest`)  
+- ✅ Enhanced statistics with visual charts
+- ✅ Profile pausing during impulse mode
+- ✅ Chord ordering fix (longer chords first)
+- ✅ Batch import from files
+- ✅ Better UX throughout
