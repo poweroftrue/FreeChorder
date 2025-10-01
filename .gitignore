@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# FreeChorder specific
+.freechorder_history
+*.log
+
+# Karabiner backup files
+karabiner_backup_*.json
+
+# User configuration (keep examples but not actual user configs)
+.config/freechorder/chords.yaml
+.config/freechorder/stats.yaml
+.config/freechorder/backups/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+

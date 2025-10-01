@@ -1,0 +1,19 @@
+# FreeChorder Starter Chords
+# Format: keys,output
+# Lines starting with # are comments
+
+# Common words
+wit,with
+for,for
+thi,this
+
+# Programming keywords  
+fun,function
+cls,class
+imp,import
+
+# Common phrases
+tks,thanks
+pls,please
+btw,by the way
+
